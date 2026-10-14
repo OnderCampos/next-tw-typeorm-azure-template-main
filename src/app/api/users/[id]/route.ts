@@ -3,11 +3,23 @@ import { UserRepository } from "@/infra/repositories/UserRepository";
 
 type Params = { params: { id: string } };
 
+function getUserIdResponse(idParam: string) {
+  const id = Number(idParam);
+
+  if (isNaN(id)) {
+    return {
+      errorResponse: NextResponse.json({ error: "ID inválido" }, { status: 400 }),
+    };
+  }
+
+  return { id };
+}
+
 export async function GET(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const { id, errorResponse } = getUserIdResponse(params.id);
+    if (errorResponse) {
+      return errorResponse;
     }
 
     const user = await UserRepository.findById(id);
@@ -30,9 +42,9 @@ export async function GET(req: NextRequest, { params }: Params) {
 
 export async function PATCH(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const { id, errorResponse } = getUserIdResponse(params.id);
+    if (errorResponse) {
+      return errorResponse;
     }
 
     const body = await req.json();
@@ -58,9 +70,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 export async function DELETE(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const { id, errorResponse } = getUserIdResponse(params.id);
+    if (errorResponse) {
+      return errorResponse;
     }
 
     await UserRepository.delete(id);
