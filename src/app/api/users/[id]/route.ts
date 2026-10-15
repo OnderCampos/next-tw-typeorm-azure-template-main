@@ -3,11 +3,20 @@ import { UserRepository } from "@/infra/repositories/UserRepository";
 
 type Params = { params: { id: string } };
 
+function parseUserId(idParam: string) {
+  const id = Number(idParam);
+  if (isNaN(id)) {
+    return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+  }
+
+  return id;
+}
+
 export async function GET(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const id = parseUserId(params.id);
+    if (id instanceof NextResponse) {
+      return id;
     }
 
     const user = await UserRepository.findById(id);
@@ -30,9 +39,9 @@ export async function GET(req: NextRequest, { params }: Params) {
 
 export async function PATCH(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const id = parseUserId(params.id);
+    if (id instanceof NextResponse) {
+      return id;
     }
 
     const body = await req.json();
@@ -58,9 +67,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 export async function DELETE(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const id = parseUserId(params.id);
+    if (id instanceof NextResponse) {
+      return id;
     }
 
     await UserRepository.delete(id);
