@@ -3,14 +3,23 @@ import { UserRepository } from "@/infra/repositories/UserRepository";
 
 type Params = { params: { id: string } };
 
+function getValidatedUserId(idParam: string) {
+  const id = Number(idParam);
+  if (isNaN(id)) {
+    return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+  }
+
+  return id;
+}
+
 export async function GET(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const validatedId = getValidatedUserId(params.id);
+    if (validatedId instanceof NextResponse) {
+      return validatedId;
     }
 
-    const user = await UserRepository.findById(id);
+    const user = await UserRepository.findById(validatedId);
     if (!user) {
       return NextResponse.json(
         { error: "Usuario no encontrado" },
@@ -30,9 +39,9 @@ export async function GET(req: NextRequest, { params }: Params) {
 
 export async function PATCH(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const validatedId = getValidatedUserId(params.id);
+    if (validatedId instanceof NextResponse) {
+      return validatedId;
     }
 
     const body = await req.json();
@@ -45,7 +54,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       );
     }
 
-    const updatedUser = await UserRepository.update(id, { email, name });
+    const updatedUser = await UserRepository.update(validatedId, { email, name });
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
     console.error("Update user error:", error);
@@ -58,12 +67,12 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 export async function DELETE(req: NextRequest, { params }: Params) {
   try {
-    const id = Number(params.id);
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 });
+    const validatedId = getValidatedUserId(params.id);
+    if (validatedId instanceof NextResponse) {
+      return validatedId;
     }
 
-    await UserRepository.delete(id);
+    await UserRepository.delete(validatedId);
     return NextResponse.json({ message: "Usuario eliminado" }, { status: 200 });
   } catch (error) {
     console.error("Delete user error:", error);
