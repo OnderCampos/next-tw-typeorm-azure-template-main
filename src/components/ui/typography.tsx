@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 
 export function TypographyH1({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
@@ -12,12 +13,15 @@ export function TypographyH1({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </h1>
   )
 }
 
 export function TypographyH2({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
@@ -27,12 +31,15 @@ export function TypographyH2({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </h2>
   )
 }
 
 export function TypographyH3({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
@@ -42,12 +49,15 @@ export function TypographyH3({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </h3>
   )
 }
 
 export function TypographyH4({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
@@ -57,7 +67,9 @@ export function TypographyH4({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </h4>
   )
 }
 
@@ -167,4 +179,3 @@ export function TypographyMuted({
     />
   )
 }
-
