@@ -1,5 +1,6 @@
 // src/app/api/storage/upload/route.ts
 
+import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken, COOKIE_NAME } from "@/lib/utils/jwt.utils";
@@ -54,7 +55,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(7);
+    const random = randomUUID();
     const fileExtension = file.name.split(".").pop();
     const blobName = `${payload.sub}/${timestamp}-${random}.${fileExtension}`;
 
