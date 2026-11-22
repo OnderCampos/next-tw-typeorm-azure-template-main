@@ -30,7 +30,6 @@ export async function getBlobSasUrl(
   blobName: string,
   expiresOn: Date,
 ): Promise<string> {
-  blobClient.credential;
   // 1. Initialize credentials
   const sharedKeyCredential =
     blobClient.credential as StorageSharedKeyCredential;

@@ -45,7 +45,7 @@ export function useAuth() {
       }
     };
 
-    fetchSession();
+    void fetchSession();
   }, []);
 
   return { ...session, loading };

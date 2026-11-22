@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 // Pure business logic, no framework deps
 export class UserService {
   static validateEmail(email: string): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^[^\s@]+@(?:[^\s@.]+\.)+[^\s@.]+$/.test(email);
   }
 
   /**
