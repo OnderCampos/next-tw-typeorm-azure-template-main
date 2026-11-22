@@ -1,4 +1,3 @@
-// scripts/setup-local.js
 const { execSync } = require("child_process");
 const { existsSync } = require("fs");
 const path = require("path");
@@ -82,4 +81,4 @@ async function main() {
   }
 }
 
-main();
+void main();
