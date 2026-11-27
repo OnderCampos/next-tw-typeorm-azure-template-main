@@ -90,5 +90,15 @@
     "tsx": "^4.19.2",
     "typescript": "^5",
     "dotenv-cli": "^7.4.2"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80.0,
+        "functions": 80.0,
+        "lines": 80.0,
+        "statements": 80.0
+      }
+    }
   }
 }
